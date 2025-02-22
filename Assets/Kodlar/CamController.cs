@@ -2,19 +2,25 @@ using UnityEngine;
 
 public class CamController : MonoBehaviour
 {
-    [Range(0, 1)]
-    public float smoothTime;
-    public float orthoSize;
     public Transform playerTransform;
-    public void FixedUpdate()
-    {
-        orthoSize = GetComponent<Camera>().orthographicSize;
-        Vector3 pos = GetComponent<Transform>().position;
+    public float smoothTime = 0.2f; // Kameranýn yumuþak hareket süresi
+    public Vector2 minLimits; // Kamera sýnýrlarý (Sol Alt)
+    public Vector2 maxLimits; // Kamera sýnýrlarý (Sað Üst)
 
-        pos.x = Mathf.Lerp(pos.x, playerTransform.position.x, smoothTime);
-        pos.y = Mathf.Lerp(pos.y, playerTransform.position.y, smoothTime);
-        pos.x = Mathf.Clamp(pos.x, -60 + orthoSize + 4, 200 - orthoSize - 4);
-        pos.y = Mathf.Clamp(pos.y, -80 + orthoSize, 160 - orthoSize);
-        GetComponent<Transform>().position = pos;
+    private Vector3 velocity = Vector3.zero;
+
+    void LateUpdate()
+    {
+        if (playerTransform == null)
+            return;
+
+        Vector3 targetPosition = new Vector3(playerTransform.position.x, playerTransform.position.y, transform.position.z);
+
+        // Sýnýrlar içinde kalmasýný saðla
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minLimits.x, maxLimits.x);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minLimits.y, maxLimits.y);
+
+        // Kamerayý yumuþak þekilde hedef pozisyona taþý
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 }

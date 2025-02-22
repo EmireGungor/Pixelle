@@ -8,8 +8,10 @@ public class LightManager : MonoBehaviour
     public float currentLight;
     public float lightDecayRate = 5f;
     public Slider lightSlider;
-    public Light2D playerLight; // Light yerine Light2D kullanıyoruz!
+    public Light2D playerLight; // Light2D ışık bileşeni
     public GameObject deathScreen; // Ölüm ekranı paneli
+
+    private bool isTalking = false; // NPC ile konuşma durumu
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class LightManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentLight > 0)
+        if (!isTalking && currentLight > 0) // NPC ile konuşulmuyorsa ışık azalsın
         {
             currentLight -= lightDecayRate * Time.deltaTime;
             if (currentLight <= 0)
@@ -83,5 +85,17 @@ public class LightManager : MonoBehaviour
             deathScreen.SetActive(true); // Ölüm ekranını aç
             Time.timeScale = 0f; // Oyunu durdur
         }
+    }
+
+    // NPC ile konuşmaya başlandığında ışık azalmayı durdur
+    public void StartTalking()
+    {
+        isTalking = true;
+    }
+
+    // NPC ile konuşma bittiğinde ışık tekrar azalmaya başlasın
+    public void StopTalking()
+    {
+        isTalking = false;
     }
 }

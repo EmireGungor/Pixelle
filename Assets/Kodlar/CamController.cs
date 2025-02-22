@@ -4,7 +4,7 @@ public class CamController : MonoBehaviour
 {
     [Range(0, 1)]
     public float smoothTime;
-    private float orthoSize;
+    public float orthoSize;
     public Transform playerTransform;
     public void FixedUpdate()
     {

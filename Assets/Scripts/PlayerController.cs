@@ -1,41 +1,47 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
-    private float horizontalInput;
+
+    [Header("Movement Settings")]
     public float moveSpeed = 9f;
+    public float acceleration = 12f;
+    public float deceleration = 16f;
+    public float airControl = 0.5f;
+    private float horizontalInput;
     private bool isFacingRight = true;
-    public float jumpPower = 10f;
-    private bool isGrounded = false;
-    public float knockbackForce = 6f;
-    private float knockbackCounter = 0f; // Ba�lang��ta 0 olarak ayarland�
-    public float knockbackTime = 0.2f;
-    public bool knockFromRight;
+
+    [Header("Jump Settings")]
+    public float jumpPower = 14f;
+    public float fallMultiplier = 2.5f; // Daha hızlı düşme efekti
+    public float lowJumpMultiplier = 2f;
+    public float coyoteTime = 0.15f;
+    public float jumpBufferTime = 0.1f;
+    private float coyoteTimeCounter;
+    private float jumpBufferCounter;
+
+    [Header("Ground Detection")]
+    public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
-    public Transform groundCheck;
+    private bool isGrounded;
 
     private Rigidbody2D rb;
-    // private Animator animator;
+    private bool isJumping;
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -43,75 +49,104 @@ public class PlayerController : MonoBehaviour
         HandleInput();
         HandleJump();
         FlipSprite();
-        //UpdateAnimator();
     }
 
     private void FixedUpdate()
     {
         HandleMovement();
+        ApplyGravity();
         CheckGrounded();
     }
 
     private void HandleInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxisRaw("Horizontal"); // Daha hızlı tepki verir
+
+        // Zıplama buffer süresi: Tuşa erken basılırsa kaydedilir
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
     }
 
     private void HandleJump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime; // Yere bastığında sıfırlanır
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        // Eğer coyote time veya jump buffer içindeyse zıplamaya izin ver
+        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-            isGrounded = false;
+            isJumping = true;
+            jumpBufferCounter = 0; // Buffer kullanıldı
+        }
+
+        // Zıplama tuşu bırakıldığında yükselmeyi yumuşak bırak
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
     }
 
     private void HandleMovement()
     {
-        if (knockbackCounter <= 0)
-        {
-            rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
-        }
-        else
-        {
-            ApplyKnockback();
-            knockbackCounter -= Time.deltaTime;
-        }
+        float targetSpeed = horizontalInput * moveSpeed;
+        float speedDifference = targetSpeed - rb.velocity.x;
+        float accelRate = (isGrounded ? acceleration : acceleration * airControl);
+
+        if (horizontalInput == 0)
+            accelRate = deceleration; // Daha hızlı durma
+
+        float movement = speedDifference * accelRate * Time.fixedDeltaTime;
+        rb.velocity = new Vector2(rb.velocity.x + movement, rb.velocity.y);
     }
 
-    private void ApplyKnockback()
+    private void ApplyGravity()
     {
-        float knockbackDirection = knockFromRight ? -knockbackForce : knockbackForce;
-        rb.velocity = new Vector2(knockbackDirection, rb.velocity.y);
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
     }
 
     private void FlipSprite()
     {
-        if ((isFacingRight && horizontalInput < 0f) || (!isFacingRight && horizontalInput > 0f))
+        if ((isFacingRight && horizontalInput < 0) || (!isFacingRight && horizontalInput > 0))
         {
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
     private void CheckGrounded()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (isGrounded && rb.velocity.y <= 0)
+        {
+            coyoteTimeCounter = coyoteTime;
+            isJumping = false;
+        }
     }
 
-    /*  private void UpdateAnimator()
-       {
-           animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
-           animator.SetBool("isGrounded", isGrounded);
-       }
-    */
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 }

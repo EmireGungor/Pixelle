@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 416489716}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.61, y: -0.46, z: 0}
+  m_LocalPosition: {x: 0.61, y: -0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,9 +170,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 1
-  m_Color: {r: 1, g: 0.9612419, b: 0.87358487, a: 1}
-  m_Intensity: 0.3
+  m_FalloffIntensity: 0.599
+  m_Color: {r: 1, g: 0.7737995, b: 0.42830187, a: 1}
+  m_Intensity: 0.48
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -191,10 +191,10 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 207.45775
-  m_PointLightOuterAngle: 207.45775
-  m_PointLightInnerRadius: 1.13
-  m_PointLightOuterRadius: 1.86
+  m_PointLightInnerAngle: 182.82646
+  m_PointLightOuterAngle: 213.15977
+  m_PointLightInnerRadius: 1.21
+  m_PointLightOuterRadius: 1.87
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -284,8 +284,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
-  m_Color: {r: 0.95438576, g: 1, b: 0.6627451, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 0.7438892, b: 0.3754716, a: 1}
+  m_Intensity: 0.99
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -306,8 +306,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.25
-  m_PointLightOuterRadius: 1.6
+  m_PointLightInnerRadius: 0.17
+  m_PointLightOuterRadius: 2.36
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

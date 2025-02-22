@@ -9,12 +9,16 @@ public class LightManager : MonoBehaviour
     public float lightDecayRate = 5f;
     public Slider lightSlider;
     public Light2D playerLight; // Light yerine Light2D kullanıyoruz!
+    public GameObject deathScreen; // Ölüm ekranı paneli
 
     private void Start()
     {
         currentLight = maxLight;
         UpdateUI();
         UpdateLight();
+
+        if (deathScreen != null)
+            deathScreen.SetActive(false); // Başlangıçta kapalı olmalı
     }
 
     private void Update()
@@ -70,7 +74,14 @@ public class LightManager : MonoBehaviour
     void Die()
     {
         Debug.Log("Işık söndü, karakter öldü!");
+
         if (playerLight != null)
             playerLight.enabled = false;
+
+        if (deathScreen != null)
+        {
+            deathScreen.SetActive(true); // Ölüm ekranını aç
+            Time.timeScale = 0f; // Oyunu durdur
+        }
     }
 }

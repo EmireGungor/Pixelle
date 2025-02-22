@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Settings")]
     public float jumpPower = 14f;
-    public float fallMultiplier = 2.5f; // Daha hızlı düşme efekti
+    public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
     public float coyoteTime = 0.15f;
     public float jumpBufferTime = 0.1f;
@@ -29,7 +29,10 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
 
     private Rigidbody2D rb;
+    private Animator anim;
     private bool isJumping;
+    private bool isRunning;
+    private bool isFalling;
 
     private void Awake()
     {
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
         HandleInput();
         HandleJump();
         FlipSprite();
+        UpdateAnimations();
     }
 
     private void FixedUpdate()
@@ -60,9 +65,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal"); // Daha hızlı tepki verir
+        horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        // Zıplama buffer süresi: Tuşa erken basılırsa kaydedilir
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
@@ -77,26 +81,30 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            coyoteTimeCounter = coyoteTime; // Yere bastığında sıfırlanır
+            coyoteTimeCounter = coyoteTime;
         }
         else
         {
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        // Eğer coyote time veya jump buffer içindeyse zıplamaya izin ver
         if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
-            jumpBufferCounter = 0; // Buffer kullanıldı
+            jumpBufferCounter = 0;
         }
 
-        // Zıplama tuşu bırakıldığında yükselmeyi yumuşak bırak
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            Debug.Log("Zıplama Algılandı!");
+        }
+
     }
 
     private void HandleMovement()
@@ -106,7 +114,7 @@ public class PlayerController : MonoBehaviour
         float accelRate = (isGrounded ? acceleration : acceleration * airControl);
 
         if (horizontalInput == 0)
-            accelRate = deceleration; // Daha hızlı durma
+            accelRate = deceleration;
 
         float movement = speedDifference * accelRate * Time.fixedDeltaTime;
         rb.velocity = new Vector2(rb.velocity.x + movement, rb.velocity.y);
@@ -141,7 +149,21 @@ public class PlayerController : MonoBehaviour
         {
             coyoteTimeCounter = coyoteTime;
             isJumping = false;
+            isFalling = false;
         }
+    }
+
+    private void UpdateAnimations()
+    {
+        isRunning = horizontalInput != 0;
+        isFalling = rb.velocity.y < 0 && !isGrounded;
+
+        anim.SetBool("isRunning", isRunning);
+        anim.SetBool("isJumping", isJumping);
+        anim.SetBool("isFalling", isFalling);
+        anim.SetBool("isGrounded", isGrounded);
+
+        Debug.Log($"isRunning: {isRunning}, isJumping: {isJumping}, isFalling: {isFalling}, isGrounded: {isGrounded}");
     }
 
     private void OnDrawGizmos()
@@ -149,4 +171,4 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
-}
+} 

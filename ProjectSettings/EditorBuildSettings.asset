@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/OpeningScene.unity
     guid: 531fca6b130c4d143a7669be09d1b215
   - enabled: 1
+    path: Assets/karsiori/Scenes/E3_Scene.unity
+    guid: 76e7465146a1d794babc1da47ba89da8
+  - enabled: 0
     path: Assets/karsiori/Scenes/SampleScene - Woods Tileset and Background.unity
     guid: d857c5980a1d9f44f8c4fbce6bf729d3
   - enabled: 0

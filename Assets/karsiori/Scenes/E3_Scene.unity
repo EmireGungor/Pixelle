@@ -22581,8 +22581,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.017550021, y: 0.09334999, z: 0}
-    m_Extent: {x: 0.98004997, y: 1.38835, z: 0}
+    m_Center: {x: 0.017700016, y: 0.093250036, z: 0}
+    m_Extent: {x: 0.9799, y: 1.38835, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -34974,7 +34974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &640129756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -84568,9 +84568,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Continue
-
-'
+  m_text: Sonraki
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
@@ -100249,7 +100247,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tekrar dene
+  m_text: Tekrar Oyna
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}

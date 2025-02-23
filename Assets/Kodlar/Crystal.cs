@@ -4,31 +4,55 @@ public class Crystal : MonoBehaviour
 {
     public float lightAmount = 20f; // Kristalin artıracağı ışık miktarı
     private Animator animator;
+    private AudioSource audioSource;
 
     private void Start()
     {
-        animator = GetComponent<Animator>(); // Animator bileşenini al
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
         if (animator == null)
         {
             Debug.LogWarning("Animator bileşeni atanmadı!");
+        }
+        if (audioSource == null)
+        {
+            Debug.LogWarning("AudioSource bileşeni atanmadı!");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) // Sadece "Player" tag'ine sahip objeler etkilenir
+        if (other.CompareTag("Player"))
         {
-            LightManager lm = FindObjectOfType<LightManager>(); // Sahnedeki LightManager’ı bul
+            LightManager lm = FindObjectOfType<LightManager>();
             if (lm != null)
             {
-                lm.CollectCrystal(lightAmount); // Işık seviyesini artır
+                lm.CollectCrystal(lightAmount);
             }
             else
             {
                 Debug.LogWarning("LightManager bulunamadı!");
             }
 
-            Destroy(gameObject); // Kristali yok et
+            if (animator != null)
+            {
+                animator.SetTrigger("Collect");
+            }
+
+            if (audioSource != null && audioSource.clip != null)
+            {
+                // Yeni bir boş nesne oluştur ve sesi burada çal
+                GameObject tempAudio = new GameObject("CrystalSound");
+                AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
+                tempSource.clip = audioSource.clip;
+                tempSource.volume = audioSource.volume;
+                tempSource.pitch = audioSource.pitch;
+                tempSource.Play();
+                Destroy(tempAudio, tempSource.clip.length); // Ses çalınca nesneyi yok et
+            }
+
+            Destroy(gameObject); // Obje hemen yok olsun
         }
     }
 }

@@ -323,7 +323,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Ayarlar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
@@ -549,7 +549,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Credits
+  m_text: Yapim Ekibi
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: cikis
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play
+  m_text: OYNA
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
@@ -1338,14 +1338,14 @@ RectTransform:
   m_GameObject: {fileID: 1698403843}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3677, y: 1.3677, z: 1.3677}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1089957753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.4, y: 109.8}
+  m_AnchoredPosition: {x: 65, y: 111}
   m_SizeDelta: {x: 273.4749, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1698403845
@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Name
+  m_text: lumiere
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
@@ -1614,7 +1614,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 191
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

@@ -845,7 +845,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Credits
+  m_text: Yapim Ekibi
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
   m_sharedMaterial: {fileID: 1872425531635207081, guid: 8dd3ec1ad393ce34fb494aebaf3bc4d4, type: 2}
